@@ -20,6 +20,7 @@ const ffmpeg = require("ffmpeg");
 const opus = require("opusscript");
 const ytdl = require("ytdl-core");
 const yts = require("yt-search");
+const config = require("./config.json")
 
 bot.on('message', function(message){
     const list = bot.guilds.get("596754524392259584");
@@ -325,4 +326,4 @@ bot.on('message', function(message){
 
 
 
-bot.login($discord_token)
+bot.login(config.token)
