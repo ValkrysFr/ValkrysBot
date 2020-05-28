@@ -274,13 +274,28 @@ bot.on('message', function(message){
         }
     }
     else if(message.content.startsWith('/s')){
-        var args = message.content.slice(3);
-        yts(args, function(err, r){
-            if(err) throw err;
+    var args = message.content.slice(3);
+    yts(args, function(err, r){
+        if(err) throw err;
 
+        let voiceChannel = message.member.voiceChannel;
+        if(!voiceChannel){
+            return message.reply("vous devez être dans un salon vocal !");
+        }
+        else{
             const videos = r.videos;
-            message.channel.send(videos[0].title+" -- "+videos[0].url)
-        })
+            var embed = new Discord.RichEmbed()
+                        .setTitle(videos[0].title)
+                        .setFooter("Duration: "+videos[0].timestamp)
+                        .setAuthor("Music asked by "+message.author.username, message.author.avatarURL)
+                        .setImage("https://img.youtube.com/vi/"+videos[0].videoId+"/mqdefault.jpg")
+                        .setDescription(videos[0].description);
+            message.channel.send(embed);
+            voiceChannel.join().then(function (connection) {
+            connection.playStream(ytdl(videos[0].url, {filter: "audioonly"}));
+            })
+        }
+    })
     }
    
 
