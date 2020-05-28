@@ -19,6 +19,7 @@ bot.polls =require("./ressources/json/polls.json");
 const ffmpeg = require("ffmpeg");
 const opus = require("opusscript");
 const ytdl = require("ytdl-core");
+const yts = require("yt-search");
 
 bot.on('message', function(message){
     const list = bot.guilds.get("596754524392259584");
@@ -270,6 +271,15 @@ bot.on('message', function(message){
             connection.playStream(ytdl(url, {filter: "audioonly"}));
             })
         }
+    }
+    else if(message.content.startsWith('/s')){
+        var args = message.content.slice(3);
+        yts(args, function(err, r){
+            if(err) throw err;
+
+            const videos = r.videos;
+            message.channel.send(videos[0].title+" -- "+videos[0].url)
+        })
     }
    
 
