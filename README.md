@@ -1,12 +1,12 @@
 # BreakerBot
 
-Discord's bot for the french minecraft server BreakerLand. 
+Bot Discord pour le serveur minecraft français BreakerLand.
 
-This readme is in construction.
+/!\ Ce README est en construction /!\
 
 
-## Need help ?
-Contact me on GitHub or Discord: Azod#3237
+## Besoin d'aide ?
+Contacter moi sur GitHub ou Discord: Azod#3237
 
 ## Liens
 [Site](https://breakerland.fr)
