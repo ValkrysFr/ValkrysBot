@@ -4,6 +4,8 @@ Bot Discord pour le serveur minecraft français BreakerLand.
 
 /!\ Ce README est en construction /!\
 
+## Configuration 
+Remplacer `your-token` par le token de votre bot !
 
 ## Besoin d'aide ?
 Contacter moi sur GitHub ou Discord: Azod#3237
