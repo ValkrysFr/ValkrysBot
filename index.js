@@ -13,8 +13,8 @@ bot.on('ready', function(){
 })
 
 const fs = require("fs");
-bot.msgs = require("./ideas.json");
-bot.polls =require("./polls.json");
+bot.msgs = require("./ressources/json/ideas.json");
+bot.polls =require("./ressources/json/polls.json");
 
 const ffmpeg = require("ffmpeg");
 const opus = require("opusscript");
@@ -69,7 +69,7 @@ bot.on('message', function(message){
                 var _author = bot.msgs[actual.toString()].author;
                 bot.channels.get("710089322111565874").send("Idée du Jour n°"+actual+" proposé par <@"+_author+">\n\n**"+_message+"**");
                 bot.msgs ["actual"]= actual+1;
-                fs.writeFile("./ideas.json", JSON.stringify(bot.msgs, null, 4), err =>{
+                fs.writeFile("./ressources/json/ideas.json", JSON.stringify(bot.msgs, null, 4), err =>{
                             if(err) throw err;
                 });
         }
@@ -79,7 +79,7 @@ bot.on('message', function(message){
                 newa = 1
             }
             bot.msgs ["actual"]= newa;
-            fs.writeFile("./ideas.json", JSON.stringify(bot.msgs, null, 4), err =>{
+            fs.writeFile("./ressources/json/ideas.json", JSON.stringify(bot.msgs, null, 4), err =>{
                             if(err) throw err;
                 });
             var actual = parseInt(bot.msgs.actual,10);
@@ -90,13 +90,13 @@ bot.on('message', function(message){
                 var _author = bot.msgs[actual.toString()].author;
                 bot.channels.get("710089322111565874").send("Idée du Jour n°"+actual+" proposé par <@"+_author+">\n\n**"+_message+"**");
                 bot.msgs ["actual"]= actual+1;
-                fs.writeFile("./ideas.json", JSON.stringify(bot.msgs, null, 4), err =>{
+                fs.writeFile("./ressources/json/ideas.json", JSON.stringify(bot.msgs, null, 4), err =>{
                             if(err) throw err;
                 });
         }
         else if(message.content === "/last"){
             bot.msgs ["actual"]= length(bot.msgs)-1;
-            fs.writeFile("./ideas.json", JSON.stringify(bot.msgs, null, 4), err =>{
+            fs.writeFile("./ressources/json/ideas.json", JSON.stringify(bot.msgs, null, 4), err =>{
                             if(err) throw err;
             });
             message.channel.send("L'idée du jour de demain sera la dernière proposée (Idée n°"+bot.msgs["actual"]+")");
@@ -125,7 +125,7 @@ bot.on('message', function(message){
                             text: message.content,
                             author: message.author.id
                          }
-                         fs.writeFile("./ideas.json", JSON.stringify(bot.msgs, null, 4), err =>{
+                         fs.writeFile("./ressources/json/ideas.json", JSON.stringify(bot.msgs, null, 4), err =>{
                             if(err) throw err;
                             var count = length(bot.msgs)-1;
                             message.reply("ton idée a bien été enregistrée ! (Idée n°"+count+")");
@@ -188,7 +188,7 @@ bot.on('message', function(message){
                                                                                     title: args[0],
                                                                                     author: message.author.username
                                                                                     }
-                                                                fs.writeFile("./polls.json", JSON.stringify(bot.polls, null, 4), err =>{
+                                                                fs.writeFile("./ressources/json/polls.json", JSON.stringify(bot.polls, null, 4), err =>{
                                                                                                                                             if(err) throw err;
                                                                                                                                         });
                                                                 for(let i = 1; i < len; i++){
@@ -237,7 +237,7 @@ bot.on('message', function(message){
         }
         else{
             voiceChannel.join().then(function (connection) {
-            connection.playFile('./Morceau_One.mp3')
+            connection.playFile('./ressources/sounds/Morceau_One.mp3')
             })
         }
         
@@ -249,7 +249,7 @@ bot.on('message', function(message){
         }
         else{
             voiceChannel.join().then(function (connection) {
-            connection.playFile('./Morceau_Two.mp3')
+            connection.playFile('./ressources/sounds/Morceau_Two.mp3')
             })
         }
         
@@ -305,7 +305,7 @@ bot.on('message', function(message){
                 var _author = bot.msgs[actual.toString()].author;
                 bot.channels.get("710089322111565874").send("*Idée du Jour n°"+actual+" proposée par* <@"+_author+">\n\n**"+_message+"**");
                 bot.msgs ["actual"]= actual+1;
-                fs.writeFile("./ideas.json", JSON.stringify(bot.msgs, null, 4), err =>{
+                fs.writeFile("./ressources/json/ideas.json", JSON.stringify(bot.msgs, null, 4), err =>{
                             if(err) throw err;
                          });
             }
