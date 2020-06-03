@@ -293,8 +293,19 @@ bot.on('message', function(message){
 	} else if (message.content.startsWith('/stop')) {
 		stop(message, serverQueue);
 		return;
-	}
-       })
+    }
+    else if(message.content.startsWith('/disconnect')|| message.content.startsWith('/dc')){
+        const voiceChannel = bot.voiceChannel;
+
+        if(!voiceChannel){
+            message.channel.send('Je ne suis dans aucun salon !');
+        }else{
+            voiceChannel.leave();
+            message.channel.send(':refus: Deconnexion du salon !');
+        }
+    }
+
+    })
 
 
     bot.on("guildMemberAdd", (member) => {
