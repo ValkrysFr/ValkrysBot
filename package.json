@@ -9,7 +9,7 @@
   "author": "AzodFR",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.3.2",
+    "discord.js": "^12.2",
     "ffmpeg": "0.0.4",
     "opusscript": "0.0.7",
     "prism-media": "^1.2.2",

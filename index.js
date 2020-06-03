@@ -257,7 +257,7 @@ bot.on('message', function(message){
             if(!serverQueue){
                 voiceChannel.join().then(function (connection) {
                     if(args === '1'){
-                        connection.playFile('./ressources/sounds/Morceau_One.mp3');
+                        connection.play('./ressources/sounds/Morceau_One.mp3');
                         var embed = new Discord.RichEmbed()
                             .setTitle("Morceau N°1")
                             .setFooter("Duration: 03:41")
@@ -266,7 +266,7 @@ bot.on('message', function(message){
                             .setDescription("Musique produite par Christophe_");
                         message.channel.send(embed);
                     }else if (args === '2'){
-                        connection.playFile('./ressources/sounds/Morceau_Two.mp3');
+                        connection.play('./ressources/sounds/Morceau_Two.mp3');
                         var embed = new Discord.RichEmbed()
                         .setTitle("Morceau N°2")
                         .setFooter("Duration: 03:55")
@@ -275,7 +275,7 @@ bot.on('message', function(message){
                         .setDescription("Musique produite par Christophe_");
                     message.channel.send(embed);
                     }else if (args === '3' || args === 'akla'){
-                        connection.playFile('./ressources/sounds/AKLA.mp3');
+                        connection.play('./ressources/sounds/AKLA.mp3');
                         var embed = new Discord.RichEmbed()
                         .setTitle("Morceau N°3 -- AKLA")
                         .setFooter("Duration: 04:35")
@@ -462,7 +462,7 @@ bot.on('message', function(message){
             return;
         }
     
-        const dispatcher = serverQueue.connection.playOpusStream(ytdl(song.url,{filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1<<25 }), {highWaterMark: 1})
+        const dispatcher = serverQueue.connection.play(ytdl(song.url,{filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1<<25 }), {highWaterMark: 1})
             .on('end', () => {
                 serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
