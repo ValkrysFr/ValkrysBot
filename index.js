@@ -369,7 +369,7 @@ bot.on('message', function(message){
             return message.channel.send('J\'ai besoins des permission pour rejoindre ce channel et parler !!');
         }
     
-        yts(args, function(err, r){
+        yts(args, async function(err, r){
             if(err) throw err;
     
             else if(!voiceChannel){
