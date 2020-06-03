@@ -453,7 +453,7 @@ bot.on('message', function(message){
         message.channel.send('La musique à été mis relancé par <@'+message.author.id+'>');
     }
     
-    async function play(guild, song) {
+    function play(guild, song) {
         const serverQueue = queue.get(guild.id);
         console.log(song.url);
         if (!song) {
@@ -462,7 +462,7 @@ bot.on('message', function(message){
             return;
         }
     
-        const dispatcher = serverQueue.connection.playStream(await ytdl(song.url, {filter: 'audioonly'}))
+        const dispatcher = serverQueue.connection.playStream(ytdl(song.url,{filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1<<25 }), {highWaterMark: 1})
             .on('end', () => {
                 serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
