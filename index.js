@@ -371,10 +371,6 @@ bot.on('message', function(message){
         }
     
         const voiceChannel = message.member.voiceChannel;
-        const permissions = voiceChannel.permissionsFor(message.client.user);
-        if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
-            return message.channel.send('J\'ai besoins des permission pour rejoindre ce channel et parler !!');
-        }
     
         yts(args, async function(err, r){
             if(err) throw err;
