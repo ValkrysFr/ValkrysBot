@@ -372,15 +372,14 @@ bot.on('message', function(message){
         yts(args, function(err, r){
             if(err) throw err;
     
-            let voiceChannel = message.member.voiceChannel;
-            if(!voiceChannel){
+            else if(!voiceChannel){
                 return message.reply("vous devez être dans un salon vocal !");
             }
             else{
                 const videos = r.videos;
                 const song = {
                     title: videos[0].title,
-                    url: videos[0].video_url,
+                    url: videos[0].url,
                 };
                 var embed = new Discord.RichEmbed()
                         .setTitle(videos[0].title)
