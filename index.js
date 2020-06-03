@@ -247,14 +247,14 @@ bot.on('message', function(message){
         }
     }
     else if(message.content.startsWith('/chris')){
-        let voice.channel = message.member.voice.channel;
+        let voiceChannel = message.member.voice.channel;
         let args = message.content.slice(7);
-        if(!voice.channel){
+        if(!voiceChannel){
             return message.reply("vous devez être dans un salon vocal !");
         }
         else{
             if(!serverQueue){
-                voice.channel.join().then(function (connection) {
+                voiceChannel.join().then(function (connection) {
                     if(args === '1'){
                         connection.play('./ressources/sounds/Morceau_One.mp3');
                         var embed = new Discord.MessageEmbed()
@@ -313,12 +313,12 @@ bot.on('message', function(message){
         return;
     }
     else if(message.content.startsWith('/disconnect')|| message.content.startsWith('/dc')){
-        const voice.channel = message.member.voice.channel;
+        const voiceChannel = message.member.voice.channel;
 
-        if(!voice.channel){
+        if(!voiceChannel){
             message.channel.send('Vous n\'êtes dans aucun salon !');
         }else{
-            voice.channel.disconnect();
+            voiceChannel.disconnect();
             message.channel.send(':x: Deconnexion du salon !');
         }
     }
@@ -370,12 +370,12 @@ bot.on('message', function(message){
             var args = message.content.slice(6);
         }
     
-        const voice.channel = message.member.voice.channel;
+        const voiceChannel = message.member.voice.channel;
     
         yts(args, async function(err, r){
             if(err) throw err;
     
-            else if(!voice.channel){
+            else if(!voiceChannel){
                 return message.reply("vous devez être dans un salon vocal !");
             }
             else{
@@ -394,7 +394,7 @@ bot.on('message', function(message){
                 if (!serverQueue) {
                     const queueContruct = {
                         textChannel: message.channel,
-                        voice.channel: voice.channel,
+                        voiceChannel: voiceChannel,
                         connection: null,
                         songs: [],
                         volume: 5,
@@ -406,7 +406,7 @@ bot.on('message', function(message){
                     queueContruct.songs.push(song);
             
                     try {
-                        var connection = await voice.channel.join();
+                        var connection = await voiceChannel.join();
                         queueContruct.connection = connection;
                         play(message.guild, queueContruct.songs[0]);
                     } catch (err) {
@@ -452,7 +452,7 @@ bot.on('message', function(message){
         const serverQueue = queue.get(guild.id);
         console.log(song.url);
         if (!song) {
-            serverQueue.voice.channel.leave();
+            serverQueue.voiceChannel.disconnect();
             queue.delete(guild.id);
             return;
         }
