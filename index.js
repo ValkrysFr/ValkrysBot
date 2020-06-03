@@ -406,9 +406,11 @@ bot.on('message', function(message){
                     queueContruct.songs.push(song);
             
                     try {
-                        var connection = await voiceChannel.join();
-                        queueContruct.connection = connection;
-                        play(message.guild, queueContruct.songs[0]);
+                        voiceChannel.join().then(connection => {
+                            queueContruct.connection = connection;
+                            play(message.guild, queueContruct.songs[0]);
+                        });
+                        
                     } catch (err) {
                         console.log(err);
                         queue.delete(message.guild.id);
@@ -457,7 +459,7 @@ bot.on('message', function(message){
             return;
         }
     
-        const dispatcher = serverQueue.connection.play(ytdl(song.url,{filter: 'audioonly', quality: 'highestaudio'}))
+        const dispatcher = serverQueue.connection.play(ytdl(song.url))
             .on('end', () => {
                 serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
