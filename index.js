@@ -429,31 +429,31 @@ bot.on('message', function(message){
         })
     }
             
-    function skip(message, serverQueue) {
+    async function skip(message, serverQueue) {
         if (!message.member.voiceChannel) return message.channel.send('Vous devez être dans un salon vocal pour passer la chanson!');
         if (!serverQueue) return message.channel.send('Il n\'y a pas de chanson à passer zebi!');
         serverQueue.connection.dispatcher.end();
         message.channel.send('La musique à été passé par <@'+message.author.id+'>, prochaine lecture → `'+serverQueue.songs[0].title+'`');
     }
     
-    function stop(message, serverQueue) {
+    async function stop(message, serverQueue) {
         if (!message.member.voiceChannel) return message.channel.send('Vous devez être dans un salon vocal pour arreter la musique!');
         serverQueue.songs = [];
         serverQueue.connection.dispatcher.end();
         message.channel.send('La musique à été arrêté par <@'+message.author.id+'>');
     }
-    function pause(message, serverQueue){
+   async function pause(message, serverQueue){
         if (!message.member.voiceChannel) return message.channel.send('Vous devez être dans un salon vocal pour arreter la musique!');
         serverQueue.connection.dispatcher.pause();
         message.channel.send('La musique à été mis en pause par <@'+message.author.id+'>');
     }
-    function resume(message, serverQueue){
+   async function resume(message, serverQueue){
         if (!message.member.voiceChannel) return message.channel.send('Vous devez être dans un salon vocal pour arreter la musique!');
         serverQueue.connection.dispatcher.pause();
         message.channel.send('La musique à été mis relancé par <@'+message.author.id+'>');
     }
     
-    function play(guild, song) {
+    async function play(guild, song) {
         const serverQueue = queue.get(guild.id);
     
         if (!song) {
@@ -462,7 +462,7 @@ bot.on('message', function(message){
             return;
         }
     
-        const dispatcher = serverQueue.connection.playStream(ytdl(song.url, { filter: 'audioonly' }))
+        const dispatcher = serverQueue.connection.play(await ytdl(song.url, { type: 'opus' }))
             .on('end', () => {
                 serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
