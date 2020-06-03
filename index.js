@@ -24,7 +24,7 @@ const config = require("./config.json")
 const queue = new Map();
 
 bot.on('message', function(message){
-    const list = bot.guilds.get("596754524392259584");
+    const list = bot.guilds.cache.get("596754524392259584");
     const serverQueue = queue.get(message.guild.id);
     
     if (message.channel.id === "613684354421620766"){
