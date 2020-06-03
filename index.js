@@ -301,7 +301,7 @@ bot.on('message', function(message){
             message.channel.send('Vous n\'êtes dans aucun salon !');
         }else{
             voiceChannel.leave();
-            message.channel.send(':refus: Deconnexion du salon !');
+            message.channel.send(':x: Deconnexion du salon !');
         }
     }
 
