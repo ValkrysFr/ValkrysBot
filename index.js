@@ -297,7 +297,7 @@ bot.on('message', function(message){
         
     }
 
-    else if (message.content.startsWith('/play') || message.content.startsWith('/p')) {
+    else if (message.content.startsWith('/play') || message.content.startsWith('/p ')) {
 		execute(message, serverQueue);
 		return;
 	} else if (message.content.startsWith('/skip') || message.content.startsWith('/s')) {
