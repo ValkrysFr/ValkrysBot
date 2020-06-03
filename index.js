@@ -295,10 +295,10 @@ bot.on('message', function(message){
 		return;
     }
     else if(message.content.startsWith('/disconnect')|| message.content.startsWith('/dc')){
-        const voiceChannel = bot.voiceChannel;
+        const voiceChannel = message.member.voiceChannel;
 
         if(!voiceChannel){
-            message.channel.send('Je ne suis dans aucun salon !');
+            message.channel.send('Vous n\'êtes dans aucun salon !');
         }else{
             voiceChannel.leave();
             message.channel.send(':refus: Deconnexion du salon !');
