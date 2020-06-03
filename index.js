@@ -397,7 +397,7 @@ bot.on('message', function(message){
                         voiceChannel: voiceChannel,
                         connection: null,
                         songs: [],
-                        volume: 5,
+                        volume: 1,
                         playing: true,
                     };
             
@@ -465,9 +465,9 @@ bot.on('message', function(message){
                 play(guild, serverQueue.songs[0]);
             })
             .on('error', error => {
-                console.error(error);
+                console.log(error);
             });
-        dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+        dispatcher.setVolume(serverQueue.volume);
     }
 
 bot.login(config.token);
