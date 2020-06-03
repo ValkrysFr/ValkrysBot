@@ -108,7 +108,7 @@ bot.on('message', function(message){
     } 
     else if (message.content === "/help"){
         var embed = new Discord.RichEmbed()
-            .setTitle("Liste de commandes")
+            .setTitle("Liste de commandes basiques")
             .addField(":question: Pour afficher cette liste","/help")
             .addField(":desktop: Pour avoir accès au site","/site")
             .addField(":information_source: Pour avoir accès au wiki","/wiki")
@@ -119,7 +119,18 @@ bot.on('message', function(message){
             .addField(":robot: Pour obtenir le lien du github","/github")
             .setColor("0x2ecc71")
    
-        message.channel.send(embed)
+        message.channel.send(embed);
+        var m_embed = new Discord.RichEmbed()
+            .setTitle("Liste des commandes de musique !")
+            .addField(":musical_note: Pour lancer une musique", "/play (ou /p) + titre")
+            .addField(":fast_forward: Pour passer à la musique suivante", "/skip (ou /s)")
+            .addField(":stop_button: Pour arrêter la musique", "/stop")
+            .addField(":one: Pour le morceau n°1 de Christophe_", "/chris 1")
+            .addField(":two: Pour le morceau n°2 de Christophe_", "/chris 2")
+            .addField(":three: Pour le morceau n°3 de Christophe_", "/chris 3 (ou /chris akla)")
+            .addField(":x: Pour faire partir le bot du salon", "/disconnect (ou /dc)")
+            .setColor("0x2ecc71")
+            message.channel.send(m_embed);
     }
 
     else if (message.channel.id === "710089289895247933"){
