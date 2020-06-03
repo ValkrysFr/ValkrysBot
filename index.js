@@ -355,7 +355,7 @@ bot.on('message', function(message){
         }
     }, 60000);
 
-    function execute(message, serverQueue) {
+    async function execute(message, serverQueue) {
         if(message.content.startsWith('/p')){
             var args = message.content.slice(3);
         }
@@ -403,7 +403,7 @@ bot.on('message', function(message){
                     queueContruct.songs.push(song);
             
                     try {
-                        var connection = voiceChannel.join();
+                        var connection = await voiceChannel.join();
                         queueContruct.connection = connection;
                         play(message.guild, queueContruct.songs[0]);
                     } catch (err) {
@@ -442,7 +442,7 @@ bot.on('message', function(message){
             return;
         }
     
-        const dispatcher = serverQueue.connection.play(ytdl(song.url, { filter: 'audioonly' }))
+        const dispatcher = serverQueue.connection.playStream(ytdl(song.url, { filter: 'audioonly' }))
             .on('end', () => {
                 serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
