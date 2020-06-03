@@ -21,10 +21,12 @@ const opus = require("opusscript");
 const ytdl = require("ytdl-core");
 const yts = require("yt-search");
 const config = require("./config.json")
+const queue = new Map();
 
 bot.on('message', function(message){
     const list = bot.guilds.get("596754524392259584");
-      
+    const serverQueue = queue.get(message.guild.id);
+    
     if (message.channel.id === "613684354421620766"){
         message.react("👎");
         message.react("👍");
@@ -256,47 +258,62 @@ bot.on('message', function(message){
         }
         
     }
-    else if(message.content.startsWith('/play') || message.content.startsWith('/p ')){
-        if(message.content.startsWith('/play')){
-          var url = message.content.slice(6);  
-        }
-        else if(message.content.startsWith('/p ')){
-            var url = message.content.slice(3); 
-        }
-        let voiceChannel = message.member.voiceChannel;
-        if(!voiceChannel){
-            return message.reply("vous devez être dans un salon vocal !");
-        }
-        else{
-            voiceChannel.join().then(function (connection) {
-            connection.playStream(ytdl(url, {filter: "audioonly"}));
-            })
-        }
-    }
-    else if(message.content.startsWith('/s')){
-    var args = message.content.slice(3);
-    yts(args, function(err, r){
-        if(err) throw err;
+    else if (message.content.startsWith('/play') || message.content.startsWith('/p')) {
+		execute(message, serverQueue);
+		return;
+	} else if (message.content.startsWith('/skip') || message.content.startsWith('/s')) {
+		skip(message, serverQueue);
+		return;
+	} else if (message.content.startsWith('/stop')) {
+		stop(message, serverQueue);
+		return;
+	}
+    // else if(message.content.startsWith('/s')){
+    // var args = message.content.slice(3);
+    // yts(args, function(err, r){
+    //     if(err) throw err;
 
-        let voiceChannel = message.member.voiceChannel;
-        if(!voiceChannel){
-            return message.reply("vous devez être dans un salon vocal !");
-        }
-        else{
-            const videos = r.videos;
-            var embed = new Discord.RichEmbed()
-                        .setTitle(videos[0].title)
-                        .setFooter("Duration: "+videos[0].timestamp)
-                        .setAuthor("Music asked by "+message.author.username, message.author.avatarURL)
-                        .setImage("https://img.youtube.com/vi/"+videos[0].videoId+"/mqdefault.jpg")
-                        .setDescription(videos[0].description);
-            message.channel.send(embed);
-            voiceChannel.join().then(function (connection) {
-            connection.playStream(ytdl(videos[0].url, {filter: "audioonly"}));
-            })
-        }
-    })
-    }
+    //     let voiceChannel = message.member.voiceChannel;
+    //     if(!voiceChannel){
+    //         return message.reply("vous devez être dans un salon vocal !");
+    //     }
+    //     else{
+    //         const videos = r.videos;
+    //         const song = {
+    //             title: videos[0].title,
+    //             url: videos[0].url
+    //         }
+    //         if(!serverQueue){
+    //             const queueConstruct = {
+    //                 voiceChannel: voiceChannel,
+    //                 connection: null,
+    //                 songs: [],
+    //                 volume: 5,
+    //                 playing: true
+    //             };
+    //             queue.set(message.guild.id, queueConstruct);
+
+    //             queueConstruct.songs.push(song);
+
+    //             try {
+    //                 var connection = await voiceChannel.join();
+    //                 queueConstruct.connection = connection;
+
+    //             }
+    //         }
+    //         var embed = new Discord.RichEmbed()
+    //                     .setTitle(videos[0].title)
+    //                     .setFooter("Duration: "+videos[0].timestamp)
+    //                     .setAuthor("Music asked by "+message.author.username, message.author.avatarURL)
+    //                     .setImage("https://img.youtube.com/vi/"+videos[0].videoId+"/mqdefault.jpg")
+    //                     .setDescription(videos[0].description);
+    //         message.channel.send(embed);
+    //         voiceChannel.join().then(function (connection) {
+    //         connection.playStream(ytdl(videos[0].url, {filter: "audioonly"}));
+    //         })
+    //     }
+    // })
+    // }
    
 
         })
@@ -338,7 +355,104 @@ bot.on('message', function(message){
         }
     }, 60000);
 
+    async function execute(message, serverQueue) {
+        if(message.content.startsWith('/p')){
+            var args = message.content.slice(3);
+        }
+        else if(message.content.startsWith('/play')){
+            var args = message.content.slice(6);
+        }
+    
+        const voiceChannel = message.member.voiceChannel;
+        const permissions = voiceChannel.permissionsFor(message.client.user);
+        if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
+            return message.channel.send('J\'ai besoins des permission pour rejoindre ce channel et parler !!');
+        }
+    
+        yts(args, function(err, r){
+            if(err) throw err;
+    
+            let voiceChannel = message.member.voiceChannel;
+            if(!voiceChannel){
+                return message.reply("vous devez être dans un salon vocal !");
+            }
+            else{
+                const videos = r.videos;
+                const song = {
+                    title: videos[0].title,
+                    url: videos[0].video_url,
+                };
+                var embed = new Discord.RichEmbed()
+                        .setTitle(videos[0].title)
+                        .setFooter("Duration: "+videos[0].timestamp)
+                        .setAuthor("Music asked by "+message.author.username, message.author.avatarURL)
+                        .setImage("https://img.youtube.com/vi/"+videos[0].videoId+"/mqdefault.jpg")
+                        .setDescription(videos[0].description);
+                message.channel.send(embed);
+                if (!serverQueue) {
+                    const queueContruct = {
+                        textChannel: message.channel,
+                        voiceChannel: voiceChannel,
+                        connection: null,
+                        songs: [],
+                        volume: 5,
+                        playing: true,
+                    };
+            
+                    queue.set(message.guild.id, queueContruct);
+            
+                    queueContruct.songs.push(song);
+            
+                    try {
+                        var connection = await voiceChannel.join();
+                        queueContruct.connection = connection;
+                        play(message.guild, queueContruct.songs[0]);
+                    } catch (err) {
+                        console.log(err);
+                        queue.delete(message.guild.id);
+                        return message.channel.send(err);
+                    }
+                } else {
+                    serverQueue.songs.push(song);
+                    console.log(serverQueue.songs);
+                    return message.channel.send(`${song.title} à été ajouté à la liste d'attente!`);
+                }
+            
+            }
+            
+            function skip(message, serverQueue) {
+                if (!message.member.voiceChannel) return message.channel.send('Vous devez être dans un salon vocal pour passer la chanson!');
+                if (!serverQueue) return message.channel.send('Il n\'y a pas de chanson à passer zebi!');
+                serverQueue.connection.dispatcher.end();
+            }
+            
+            function stop(message, serverQueue) {
+                if (!message.member.voiceChannel) return message.channel.send('Vous devez être dans un salon vocal pour arreter la musique!');
+                serverQueue.songs = [];
+                serverQueue.connection.dispatcher.end();
+            }
+            
+            function play(guild, song) {
+                const serverQueue = queue.get(guild.id);
+            
+                if (!song) {
+                    serverQueue.voiceChannel.leave();
+                    queue.delete(guild.id);
+                    return;
+                }
+            
+                const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
+                    .on('end', () => {
+                        serverQueue.songs.shift();
+                        play(guild, serverQueue.songs[0]);
+                    })
+                    .on('error', error => {
+                        console.error(error);
+                    });
+                dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+            }
 
+        })
+    }
 
-
-bot.login(config.token)
+bot.login(config.token);
