@@ -442,7 +442,7 @@ bot.on('message', function(message){
             return;
         }
     
-        const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
+        const dispatcher = serverQueue.connection.play(ytdl(song.url, { filter: 'audioonly' }))
             .on('end', () => {
                 serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
@@ -452,6 +452,5 @@ bot.on('message', function(message){
             });
         dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
     }
-
 
 bot.login(config.token);
