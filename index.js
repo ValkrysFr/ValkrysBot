@@ -247,14 +247,14 @@ bot.on('message', function(message){
         }
     }
     else if(message.content.startsWith('/chris')){
-        let voiceChannel = message.member.voiceChannel;
+        let voice.channel = message.member.voice.channel;
         let args = message.content.slice(7);
-        if(!voiceChannel){
+        if(!voice.channel){
             return message.reply("vous devez être dans un salon vocal !");
         }
         else{
             if(!serverQueue){
-                voiceChannel.join().then(function (connection) {
+                voice.channel.join().then(function (connection) {
                     if(args === '1'){
                         connection.play('./ressources/sounds/Morceau_One.mp3');
                         var embed = new Discord.MessageEmbed()
@@ -313,12 +313,12 @@ bot.on('message', function(message){
         return;
     }
     else if(message.content.startsWith('/disconnect')|| message.content.startsWith('/dc')){
-        const voiceChannel = message.member.voiceChannel;
+        const voice.channel = message.member.voice.channel;
 
-        if(!voiceChannel){
+        if(!voice.channel){
             message.channel.send('Vous n\'êtes dans aucun salon !');
         }else{
-            voiceChannel.disconnect();
+            voice.channel.disconnect();
             message.channel.send(':x: Deconnexion du salon !');
         }
     }
@@ -370,12 +370,12 @@ bot.on('message', function(message){
             var args = message.content.slice(6);
         }
     
-        const voiceChannel = message.member.voiceChannel;
+        const voice.channel = message.member.voice.channel;
     
         yts(args, async function(err, r){
             if(err) throw err;
     
-            else if(!voiceChannel){
+            else if(!voice.channel){
                 return message.reply("vous devez être dans un salon vocal !");
             }
             else{
@@ -394,7 +394,7 @@ bot.on('message', function(message){
                 if (!serverQueue) {
                     const queueContruct = {
                         textChannel: message.channel,
-                        voiceChannel: voiceChannel,
+                        voice.channel: voice.channel,
                         connection: null,
                         songs: [],
                         volume: 5,
@@ -406,7 +406,7 @@ bot.on('message', function(message){
                     queueContruct.songs.push(song);
             
                     try {
-                        var connection = await voiceChannel.join();
+                        var connection = await voice.channel.join();
                         queueContruct.connection = connection;
                         play(message.guild, queueContruct.songs[0]);
                     } catch (err) {
@@ -425,25 +425,25 @@ bot.on('message', function(message){
     }
             
     async function skip(message, serverQueue) {
-        if (!message.member.voiceChannel) return message.channel.send('Vous devez être dans un salon vocal pour passer la chanson!');
+        if (!message.member.voice.channel) return message.channel.send('Vous devez être dans un salon vocal pour passer la chanson!');
         if (!serverQueue) return message.channel.send('Il n\'y a pas de chanson à passer zebi!');
         serverQueue.connection.dispatcher.end();
         message.channel.send('La musique à été passé par <@'+message.author.id+'>, prochaine lecture → `'+serverQueue.songs[0].title+'`');
     }
     
     async function stop(message, serverQueue) {
-        if (!message.member.voiceChannel) return message.channel.send('Vous devez être dans un salon vocal pour arreter la musique!');
+        if (!message.member.voice.channel) return message.channel.send('Vous devez être dans un salon vocal pour arreter la musique!');
         serverQueue.songs = [];
         serverQueue.connection.dispatcher.end();
         message.channel.send('La musique à été arrêté par <@'+message.author.id+'>');
     }
    async function pause(message, serverQueue){
-        if (!message.member.voiceChannel) return message.channel.send('Vous devez être dans un salon vocal pour arreter la musique!');
+        if (!message.member.voice.channel) return message.channel.send('Vous devez être dans un salon vocal pour arreter la musique!');
         serverQueue.connection.dispatcher.pause();
         message.channel.send('La musique à été mis en pause par <@'+message.author.id+'>');
     }
    async function resume(message, serverQueue){
-        if (!message.member.voiceChannel) return message.channel.send('Vous devez être dans un salon vocal pour arreter la musique!');
+        if (!message.member.voice.channel) return message.channel.send('Vous devez être dans un salon vocal pour arreter la musique!');
         serverQueue.connection.dispatcher.pause();
         message.channel.send('La musique à été mis relancé par <@'+message.author.id+'>');
     }
@@ -452,7 +452,7 @@ bot.on('message', function(message){
         const serverQueue = queue.get(guild.id);
         console.log(song.url);
         if (!song) {
-            serverQueue.voiceChannel.leave();
+            serverQueue.voice.channel.leave();
             queue.delete(guild.id);
             return;
         }
