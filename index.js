@@ -234,30 +234,35 @@ bot.on('message', function(message){
             return message.channel.send("Égalité parfaite ! :pensive:");
         }
     }
-    else if(message.content === "/chris1"){
+    else if(message.content.startsWith('/chris')){
         let voiceChannel = message.member.voiceChannel;
+        let args = message.content.slice(7);
         if(!voiceChannel){
             return message.reply("vous devez être dans un salon vocal !");
         }
         else{
-            voiceChannel.join().then(function (connection) {
-            connection.playFile('./ressources/sounds/Morceau_One.mp3')
-            })
+            if(!serverQueue){
+                voiceChannel.join().then(function (connection) {
+                    if(args === '1'){
+                        connection.playFile('./ressources/sounds/Morceau_One.mp3');
+                    }else if (args === '2'){
+                        connection.playFile('./ressources/sounds/Morceau_Two.mp3');
+                    }else if (args === '3' || args === 'akla'){
+                        connection.playFile('./ressources/sounds/AKLA.mp3');
+                    }else{
+                        message.reply('notre chère christophe travail d\'arrache pied pour nous sortir de nouvelles musiques !');
+                    }
+                
+                })
+            }
+            else{
+                message.reply('je suis déjà en train de jouer de la musique !');
+            }
+            
         }
         
     }
-    else if(message.content === "/chris2"){
-        let voiceChannel = message.member.voiceChannel;
-        if(!voiceChannel){
-            return message.reply("vous devez être dans un salon vocal !");
-        }
-        else{
-            voiceChannel.join().then(function (connection) {
-            connection.playFile('./ressources/sounds/Morceau_Two.mp3')
-            })
-        }
-        
-    }
+
     else if (message.content.startsWith('/play') || message.content.startsWith('/p')) {
 		execute(message, serverQueue);
 		return;
@@ -268,55 +273,7 @@ bot.on('message', function(message){
 		stop(message, serverQueue);
 		return;
 	}
-    // else if(message.content.startsWith('/s')){
-    // var args = message.content.slice(3);
-    // yts(args, function(err, r){
-    //     if(err) throw err;
-
-    //     let voiceChannel = message.member.voiceChannel;
-    //     if(!voiceChannel){
-    //         return message.reply("vous devez être dans un salon vocal !");
-    //     }
-    //     else{
-    //         const videos = r.videos;
-    //         const song = {
-    //             title: videos[0].title,
-    //             url: videos[0].url
-    //         }
-    //         if(!serverQueue){
-    //             const queueConstruct = {
-    //                 voiceChannel: voiceChannel,
-    //                 connection: null,
-    //                 songs: [],
-    //                 volume: 5,
-    //                 playing: true
-    //             };
-    //             queue.set(message.guild.id, queueConstruct);
-
-    //             queueConstruct.songs.push(song);
-
-    //             try {
-    //                 var connection = await voiceChannel.join();
-    //                 queueConstruct.connection = connection;
-
-    //             }
-    //         }
-    //         var embed = new Discord.RichEmbed()
-    //                     .setTitle(videos[0].title)
-    //                     .setFooter("Duration: "+videos[0].timestamp)
-    //                     .setAuthor("Music asked by "+message.author.username, message.author.avatarURL)
-    //                     .setImage("https://img.youtube.com/vi/"+videos[0].videoId+"/mqdefault.jpg")
-    //                     .setDescription(videos[0].description);
-    //         message.channel.send(embed);
-    //         voiceChannel.join().then(function (connection) {
-    //         connection.playStream(ytdl(videos[0].url, {filter: "audioonly"}));
-    //         })
-    //     }
-    // })
-    // }
-   
-
-        })
+       })
 
 
     bot.on("guildMemberAdd", (member) => {
@@ -425,12 +382,14 @@ bot.on('message', function(message){
         if (!message.member.voiceChannel) return message.channel.send('Vous devez être dans un salon vocal pour passer la chanson!');
         if (!serverQueue) return message.channel.send('Il n\'y a pas de chanson à passer zebi!');
         serverQueue.connection.dispatcher.end();
+        message.channel.send('La musique à été passé par <@'+message.author.id+'>, prochaine lecture → `'+serverQueue.songs[0].title+'`');
     }
     
     function stop(message, serverQueue) {
         if (!message.member.voiceChannel) return message.channel.send('Vous devez être dans un salon vocal pour arreter la musique!');
         serverQueue.songs = [];
         serverQueue.connection.dispatcher.end();
+        message.channel.send('La musique à été arrêté par <@'+message.author.id+'>');
     }
     
     function play(guild, song) {
