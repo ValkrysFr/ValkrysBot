@@ -245,10 +245,31 @@ bot.on('message', function(message){
                 voiceChannel.join().then(function (connection) {
                     if(args === '1'){
                         connection.playFile('./ressources/sounds/Morceau_One.mp3');
+                        var embed = new Discord.RichEmbed()
+                            .setTitle("Morceau N°1")
+                            .setFooter("Duration: 03:41")
+                            .setAuthor("Music asked by "+message.author.username, message.author.avatarURL)
+                            .setImage("https://cdn.discordapp.com/avatars/414102115301064706/d0e2e39e1a828c96b7ad9be60db80c73.png")
+                            .setDescription("Musique produite par Christophe_");
+                        message.channel.send(embed);
                     }else if (args === '2'){
                         connection.playFile('./ressources/sounds/Morceau_Two.mp3');
+                        var embed = new Discord.RichEmbed()
+                        .setTitle("Morceau N°2")
+                        .setFooter("Duration: 03:55")
+                        .setAuthor("Music asked by "+message.author.username, message.author.avatarURL)
+                        .setImage("https://cdn.discordapp.com/avatars/414102115301064706/d0e2e39e1a828c96b7ad9be60db80c73.png")
+                        .setDescription("Musique produite par Christophe_");
+                    message.channel.send(embed);
                     }else if (args === '3' || args === 'akla'){
                         connection.playFile('./ressources/sounds/AKLA.mp3');
+                        var embed = new Discord.RichEmbed()
+                        .setTitle("Morceau N°3 -- AKLA")
+                        .setFooter("Duration: 04:35")
+                        .setAuthor("Music asked by "+message.author.username, message.author.avatarURL)
+                        .setImage("https://cdn.discordapp.com/avatars/414102115301064706/d0e2e39e1a828c96b7ad9be60db80c73.png")
+                        .setDescription("Musique produite par Christophe_");
+                    message.channel.send(embed);
                     }else{
                         message.reply('notre chère christophe travail d\'arrache pied pour nous sortir de nouvelles musiques !');
                     }
