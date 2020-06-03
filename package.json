@@ -13,6 +13,6 @@
     "ffmpeg": "0.0.4",
     "opusscript": "0.0.7",
     "yt-search": "^1.1.2",
-    "ytdl-core": "^2.1.5"
+    "ytdl-core-discord": "^1.2.0"
   }
 }
