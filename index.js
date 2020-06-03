@@ -106,7 +106,7 @@ bot.on('message', function(message){
         }
     } 
     else if (message.content === "/help"){
-        var embed = new Discord.RichEmbed()
+        var embed = new Discord.MessageEmbed()
             .setTitle("Liste de commandes basiques")
             .addField(":question: Pour afficher cette liste","/help")
             .addField(":desktop: Pour avoir accès au site","/site")
@@ -119,7 +119,7 @@ bot.on('message', function(message){
             .setColor("0x2ecc71")
    
         message.channel.send(embed);
-        var m_embed = new Discord.RichEmbed()
+        var m_embed = new Discord.MessageEmbed()
             .setTitle("Liste des commandes de musique !")
             .addField(":musical_note: Pour lancer une musique", "/play (ou /p) + titre")
             .addField(":fast_forward: Pour passer à la musique suivante", "/skip (ou /s)")
@@ -190,7 +190,7 @@ bot.on('message', function(message){
                 }
                 else{
                     var len = args.length;
-                    var embed = new Discord.RichEmbed()
+                    var embed = new Discord.MessageEmbed()
                         .setTitle(args[0])
                         .setFooter("Réagissez selon votre choix !")
                         .setColor([255,0,0])
@@ -257,7 +257,7 @@ bot.on('message', function(message){
                 voiceChannel.join().then(function (connection) {
                     if(args === '1'){
                         connection.play('./ressources/sounds/Morceau_One.mp3');
-                        var embed = new Discord.RichEmbed()
+                        var embed = new Discord.MessageEmbed()
                             .setTitle("Morceau N°1")
                             .setFooter("Duration: 03:41")
                             .setAuthor("Music asked by "+message.author.username, message.author.avatarURL)
@@ -266,7 +266,7 @@ bot.on('message', function(message){
                         message.channel.send(embed);
                     }else if (args === '2'){
                         connection.play('./ressources/sounds/Morceau_Two.mp3');
-                        var embed = new Discord.RichEmbed()
+                        var embed = new Discord.MessageEmbed()
                         .setTitle("Morceau N°2")
                         .setFooter("Duration: 03:55")
                         .setAuthor("Music asked by "+message.author.username, message.author.avatarURL)
@@ -275,7 +275,7 @@ bot.on('message', function(message){
                     message.channel.send(embed);
                     }else if (args === '3' || args === 'akla'){
                         connection.play('./ressources/sounds/AKLA.mp3');
-                        var embed = new Discord.RichEmbed()
+                        var embed = new Discord.MessageEmbed()
                         .setTitle("Morceau N°3 -- AKLA")
                         .setFooter("Duration: 04:35")
                         .setAuthor("Music asked by "+message.author.username, message.author.avatarURL)
@@ -384,7 +384,7 @@ bot.on('message', function(message){
                     title: videos[0].title,
                     url: videos[0].url,
                 };
-                var embed = new Discord.RichEmbed()
+                var embed = new Discord.MessageEmbed()
                         .setTitle(videos[0].title)
                         .setFooter("Duration: "+videos[0].timestamp)
                         .setAuthor("Music asked by "+message.author.username, message.author.avatarURL)
