@@ -318,7 +318,7 @@ bot.on('message', function(message){
         if(!voiceChannel){
             message.channel.send('Vous n\'êtes dans aucun salon !');
         }else{
-            voiceChannel.disconnect();
+            voiceChannel.leave();
             message.channel.send(':x: Deconnexion du salon !');
         }
     }
@@ -452,12 +452,12 @@ bot.on('message', function(message){
         const serverQueue = queue.get(guild.id);
         console.log(song.url);
         if (!song) {
-            serverQueue.voiceChannel.disconnect();
+            serverQueue.voiceChannel.leave();
             queue.delete(guild.id);
             return;
         }
     
-        const dispatcher = serverQueue.connection.play(ytdl(song.url,{filter: 'audioonly', quality: 'highestaudio', highWaterMark: 1<<25 }), {highWaterMark: 1})
+        const dispatcher = serverQueue.connection.play(ytdl(song.url,{filter: 'audioonly', quality: 'highestaudio'}))
             .on('end', () => {
                 serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
