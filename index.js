@@ -462,7 +462,7 @@ bot.on('message', function(message){
             return;
         }
     
-        const dispatcher = serverQueue.connection.play(await ytdl(song.url, { type: 'opus' }))
+        const dispatcher = serverQueue.connection.playStream(await ytdl(song.url, { type: 'opus' }))
             .on('end', () => {
                 serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
