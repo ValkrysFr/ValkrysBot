@@ -455,14 +455,14 @@ bot.on('message', function(message){
     
     async function play(guild, song) {
         const serverQueue = queue.get(guild.id);
-    
+        console.log(song.url);
         if (!song) {
             serverQueue.voiceChannel.leave();
             queue.delete(guild.id);
             return;
         }
     
-        const dispatcher = serverQueue.connection.playStream(await ytdl(song.url, { type: 'opus', filter: 'audioonly'}))
+        const dispatcher = serverQueue.connection.playStream(await ytdl(song.url, {filter: 'audioonly'}))
             .on('end', () => {
                 serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
