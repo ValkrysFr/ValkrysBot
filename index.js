@@ -125,6 +125,8 @@ bot.on('message', function(message){
             .addField(":musical_note: Pour lancer une musique", "/play (ou /p) + titre")
             .addField(":fast_forward: Pour passer à la musique suivante", "/skip (ou /s)")
             .addField(":stop_button: Pour arrêter la musique", "/stop")
+            .addField(":pause_button: Pour mettre la musique en pause", "/pause")
+            .addField(":play_pause: Pour remettre la musique", "/resume")
             .addField(":one: Pour le morceau n°1 de Christophe_", "/chris 1")
             .addField(":two: Pour le morceau n°2 de Christophe_", "/chris 2")
             .addField(":three: Pour le morceau n°3 de Christophe_", "/chris 3 (ou /chris akla)")
@@ -304,6 +306,12 @@ bot.on('message', function(message){
 	} else if (message.content.startsWith('/stop')) {
 		stop(message, serverQueue);
 		return;
+    }else if (message.content.startsWith('/pause')) {
+        pause(message, serverQueue);
+        return;
+    }else if (message.content.startsWith('/resume')) {
+        resume(message, serverQueue);
+        return;
     }
     else if(message.content.startsWith('/disconnect')|| message.content.startsWith('/dc')){
         const voiceChannel = message.member.voiceChannel;
@@ -433,6 +441,16 @@ bot.on('message', function(message){
         serverQueue.songs = [];
         serverQueue.connection.dispatcher.end();
         message.channel.send('La musique à été arrêté par <@'+message.author.id+'>');
+    }
+    function pause(message, serverQueue){
+        if (!message.member.voiceChannel) return message.channel.send('Vous devez être dans un salon vocal pour arreter la musique!');
+        serverQueue.connection.dispatcher.pause();
+        message.channel.send('La musique à été mis en pause par <@'+message.author.id+'>');
+    }
+    function resume(message, serverQueue){
+        if (!message.member.voiceChannel) return message.channel.send('Vous devez être dans un salon vocal pour arreter la musique!');
+        serverQueue.connection.dispatcher.pause();
+        message.channel.send('La musique à été mis relancé par <@'+message.author.id+'>');
     }
     
     function play(guild, song) {
