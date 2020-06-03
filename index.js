@@ -450,7 +450,7 @@ bot.on('message', function(message){
         message.channel.send('La musique à été mis relancé par <@'+message.author.id+'>');
     }
     
-    function play(guild, song) {
+    async function play(guild, song) {
         const serverQueue = queue.get(guild.id);
         console.log(song.url);
         if (!song) {
@@ -459,7 +459,7 @@ bot.on('message', function(message){
             return;
         }
     
-        const dispatcher = serverQueue.connection.play(ytdl(song.url))
+        const dispatcher = serverQueue.connection.play(await ytdl(song.url, {type : 'opus'}))
             .on('end', () => {
                 serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
