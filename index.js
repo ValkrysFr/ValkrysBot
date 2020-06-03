@@ -355,7 +355,7 @@ bot.on('message', function(message){
         }
     }, 60000);
 
-    async function execute(message, serverQueue) {
+    function execute(message, serverQueue) {
         if(message.content.startsWith('/p')){
             var args = message.content.slice(3);
         }
