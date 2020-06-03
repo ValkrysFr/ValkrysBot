@@ -318,7 +318,7 @@ bot.on('message', function(message){
         if(!voiceChannel){
             message.channel.send('Vous n\'êtes dans aucun salon !');
         }else{
-            voiceChannel.leave();
+            voiceChannel.disconnect();
             message.channel.send(':x: Deconnexion du salon !');
         }
     }
