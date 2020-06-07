@@ -330,7 +330,7 @@ bot.on('message', function(message){
         }else{
             voiceChannel.join().then(connection => {
                 const audio = connection.receiver.createStream(message.author.id, { mode: 'pcm' });
-                audio.pipe(fs.createWriteStream("./ressources/sounds/"+message.author.id))
+                audio.pipe(fs.createWriteStream("./ressources/sounds/"+message.author.id+".pcm"))
             })
         }
     }
