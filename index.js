@@ -329,12 +329,12 @@ bot.on('message', function(message){
     bot.on("guildMemberAdd", (member) => {
         if(member.user.username.toLowerCase().includes("discord.gg")){
             member.ban();
-            bot.channels.get("644156102690209820").lastMessage.delete()
-            bot.channels.get("624587022660665355").send("*BAN DE L'UTILISATEUR: <@"+member.user.id+">*");
+            bot.channels.cache.get("644156102690209820").lastMessage.delete()
+            bot.channels.cache.get("624587022660665355").send("*BAN DE L'UTILISATEUR: <@"+member.user.id+">*");
         }
         else{
         const guild = member.guild;
-        const defaultChannel = guild.channels.find(channel => channel.id === '644156102690209825');
+        const defaultChannel = guild.channels.cache.get('644156102690209825');
         defaultChannel.send("Bienvenue <@"+member.id+"> !")
         defaultChannel.send("Pour avoir accès à tous le serveur merci de mettre un :thumbsup: sous le <#614482156001034270>")
         }
@@ -353,7 +353,7 @@ bot.on('message', function(message){
                 }
                 var _message = bot.msgs[actual.toString()].text;
                 var _author = bot.msgs[actual.toString()].author;
-                bot.channels.get("710089322111565874").send("*Idée du Jour n°"+actual+" proposée par* <@"+_author+">\n\n**"+_message+"**");
+                bot.channels.cache.get("710089322111565874").send("*Idée du Jour n°"+actual+" proposée par* <@"+_author+">\n\n**"+_message+"**");
                 bot.msgs ["actual"]= actual+1;
                 fs.writeFile("./ressources/json/ideas.json", JSON.stringify(bot.msgs, null, 4), err =>{
                             if(err) throw err;
