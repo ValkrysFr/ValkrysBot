@@ -322,6 +322,18 @@ bot.on('message', function(message){
             message.channel.send(':x: Deconnexion du salon !');
         }
     }
+    else if(message.content === "/record"){
+        const voiceChannel = message.member.voice.channel;
+
+        if(!voiceChannel){
+            message.channel.send('Vous n\'êtes dans aucun salon !');
+        }else{
+            voiceChannel.join().then(connection => {
+                const audio = connection.receiver.createStream(message.author);
+                audio.pipe(fs.createWriteStream("./ressources/audio/"+message.author.id))
+            })
+        }
+    }
 
     })
 
