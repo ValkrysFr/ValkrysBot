@@ -329,8 +329,8 @@ bot.on('message', function(message){
             message.channel.send('Vous n\'êtes dans aucun salon !');
         }else{
             voiceChannel.join().then(connection => {
-                const audio = connection.receiver.createStream(message.author);
-                audio.pipe(fs.createWriteStream("./ressources/audio/"+message.author.id))
+                const audio = connection.receiver.createStream(message.author.id);
+                audio.pipe(fs.createWriteStream("./ressources/sounds/"+message.author.id))
             })
         }
     }
