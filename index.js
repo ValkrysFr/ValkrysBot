@@ -328,10 +328,16 @@ bot.on('message', function(message){
         if(!voiceChannel){
             message.channel.send('Vous n\'êtes dans aucun salon !');
         }else{
-            voiceChannel.join().then(connection => {
-                const audio = connection.receiver.createStream(message.author.id, { mode: 'pcm' });
-                audio.pipe(fs.createWriteStream("./ressources/sounds/"+message.author.id+".pcm"))
-            })
+            record(voiceChannel);
+        }
+    }
+    else if(message.content === "/strec"){
+        const voiceChannel = message.member.voice.channel;
+
+        if(!voiceChannel){
+            message.channel.send('Vous n\'êtes dans aucun salon !');
+        }else{
+            stop_record(voiceChannel);
         }
     }
 
@@ -480,6 +486,12 @@ bot.on('message', function(message){
                 console.log(error);
             });
         dispatcher.setVolume(serverQueue.volume);
+    }
+    async function record(voiceChannel){
+        voiceChannel.join().then(connection => {
+            const audio = connection.receiver.createStream(message.author, { mode: 'pcm', end: 'manual' });
+            audio.pipe(fs.createWriteStream("./ressources/sounds/"+message.author.id+".pcm"))
+        })
     }
 
 bot.login(config.token);
