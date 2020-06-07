@@ -375,7 +375,7 @@ bot.on('message', function(message){
             if(newChannel.name.startsWith('closed')){
                 newChannel.setName("avis-"+oldChannel.name.slice(11));
             }
-            else if(newChannel.name.startsWith("ticket")){
+            else if(newChannel.name.startsWith('ticket')){
                 newChannel.setName("recrutement-"+oldChannel.name.slice(5));
             }
         }
