@@ -372,7 +372,10 @@ bot.on('message', function(message){
     
     bot.on("channelUpdate", (oldChannel, newChannel) =>{
         if(oldChannel.parentID == "719313575193084025"){
-            newChannel.setName(oldChannel.name);
+            if(newChannel.name.startsWith('ticket') || newChannel.name.startsWith('closed')){
+               newChannel.setName(oldChannel.name); 
+            }
+            
         }
     })
 
