@@ -358,6 +358,12 @@ bot.on('message', function(message){
         }
     });
 
+    bot.on("channelCreate", (channel) => {
+        if(channel.parentID == "719313575193084025"){
+            channel.setName("Candidature"+channel.name.slice(6));
+        }
+    })
+
     setInterval(function(){
         var date = new Date();
         date.setHours(date.getHours()+2);
