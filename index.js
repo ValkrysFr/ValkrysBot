@@ -337,7 +337,7 @@ bot.on('message', function(message){
         if(!voiceChannel){
             message.channel.send('Vous n\'êtes dans aucun salon !');
         }else{
-            stop_record(voiceChannel);
+            stop_record(voiceChannel, message);
         }
     }
 
@@ -487,7 +487,7 @@ bot.on('message', function(message){
             });
         dispatcher.setVolume(serverQueue.volume);
     }
-    async function record(voiceChannel){
+    async function record(voiceChannel, message){
         voiceChannel.join().then(connection => {
             const audio = connection.receiver.createStream(message.author, { mode: 'pcm', end: 'manual' });
             audio.pipe(fs.createWriteStream("./ressources/sounds/"+message.author.id+".pcm"))
