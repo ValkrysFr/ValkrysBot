@@ -360,25 +360,17 @@ bot.on('message', function(message){
 
     bot.on("channelCreate", (channel) => {
         if(channel.parentID == "719313575193084025"){
-            if(!channel.name.slice(9).startsWith('0')){
-                channel.setName("candidature-"+channel.name.slice(9));
-            }
-            else{
-                channel.setName("candidature-"+channel.name.slice(10));
-            }
+            const name = channel.name.split('-');
+            channel.setName("candidature-"+name[1]);
             
         }
     })
     
     bot.on("channelUpdate", (oldChannel, newChannel) =>{
         if(oldChannel.parentID == "719313575193084025"){
-            console.log("old : "+oldChannel.name);
-            console.log("new : "+newChannel.name);
-            console.log("=========");
-            if(newChannel.name.startsWith('ticket') || newChannel.name.startsWith('closed')){
-                console.log("HAVE TO CHANGE BECAUSE: "+newChannel.name);
-                console.log("=========");
-               newChannel.setName(oldChannel.name); 
+            if(!newChannel.name.startsWith('candidature')){
+                const name = newChannel.name.split('-');
+                newChannel.setName("candidature-"+name[1]);
             }
             
         }
