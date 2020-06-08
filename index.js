@@ -367,7 +367,7 @@ bot.on('message', function(message){
     })
     
     bot.on("channelUpdate", (oldChannel, newChannel) =>{
-        if(newChannel.parentID == "719313575193084025"){
+        if(newChannel.parentID === "719313575193084025"){
             if(!newChannel.name.startsWith('candidature')){
                 const name = newChannel.name.split('-');
                 newChannel.setName("candidature-"+name[1]);
