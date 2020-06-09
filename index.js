@@ -343,16 +343,20 @@ bot.on('message', function(message){
     else if(message.channel.parentID === '719313575193084025'){
         if(message.content.startsWith('/cv')){
             const args = message.content.slice(4).split("¤");
+
             const embed = new Discord.MessageEmbed()
                 .setAuthor(message.author.username, message.author.avatarURL())
                 .setTitle("Candidature de: "+message.author.username)
-                .addField("Présentation IRL:", args[0])
-                .addField("Présentation in-game:", args[1])
-                .addField("Poste demandé:", args[2])
-                .addField("Motivation:", args[3])
+                .addField("Présentation IRL:", args[0].replace('$_$', '\n'))
+                .addField("Présentation in-game:", args[1].replace('$_$', '\n'))
+                .addField("Poste demandé:", args[2].replace('$_$', '\n'))
+                .addField("Motivation:", args[3].replace('$_$', '\n'))
                 .setFooter("Candidature générer depuis breakerland.fr")
                 .setColor("RANDOM");
-            message.channel.send(embed);
+            message.channel.send(embed).then(m => {
+                m.react(":white_check_mark:");
+                m.react(":x:");
+            });
             message.reply("refusé :x:");
             console.log(args);
             message.delete();
