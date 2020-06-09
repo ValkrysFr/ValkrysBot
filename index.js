@@ -194,7 +194,7 @@ bot.on('message', function(message){
                         .setTitle(args[0])
                         .setFooter("Réagissez selon votre choix !")
                         .setColor([255,0,0])
-                        .setAuthor("Sondage par "+message.author.username, message.author.avatarURL);
+                        .setAuthor("Sondage par "+message.author.username, message.author.avatarURL());
                     for(let i = 1; i < len; i++){
                         var choice = args[i].split('$');
                         embed.addField("----", choice[1]+" : "+choice[0])
