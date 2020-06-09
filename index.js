@@ -340,6 +340,23 @@ bot.on('message', function(message){
             stop_record(voiceChannel, message);
         }
     }
+    else if(message.channel.parentID === '719313575193084025'){
+        if(message.content.startsWith('/cv')){
+            const args = message.content.slice(4).split("¤");
+            const embed = new Discord.MessageEmbed()
+                .setAuthor(message.author.username, message.author.avatarURL())
+                .setTitle("Candidature de: "+message.author.username)
+                .addField("Présentation IRL:", args[0])
+                .addField("Présentation in-game:", args[1])
+                .addField("Poste demandé:", args[2])
+                .addField("Motiation:", args[3])
+                .setFooter("Candidature générer depuis breakerland.fr")
+                .setColor("RANDOM");
+            message.channel.send(embed);
+            message.delete();
+
+        }
+    }
 
     })
 
