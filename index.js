@@ -353,7 +353,8 @@ bot.on('message', function(message){
                 .setFooter("Candidature générer depuis breakerland.fr")
                 .setColor("RANDOM");
             message.channel.send(embed);
-            message.reply("refusé :refus:");
+            message.reply("refusé :x:");
+            console.log(args);
             message.delete();
 
         }
