@@ -349,7 +349,7 @@ bot.on('message', function(message){
                 .addField("Présentation IRL:", args[0])
                 .addField("Présentation in-game:", args[1])
                 .addField("Poste demandé:", args[2])
-                .addField("Motiation:", args[3])
+                .addField("Motivation:", args[3])
                 .setFooter("Candidature générer depuis breakerland.fr")
                 .setColor("RANDOM");
             message.channel.send(embed);
