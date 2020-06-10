@@ -385,7 +385,6 @@ bot.on('message', function(message){
             m.react("👎");
         });
         message.guild.channels.cache.get('596756701982490635').send("Nouvelle candidature de <@"+candidat.user.id+"> ! <#720308538173554781> \@STAFF")
-        message.delete();
     }
 
     })
