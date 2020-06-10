@@ -341,7 +341,7 @@ bot.on('message', function(message){
             message.guild.roles.cache.forEach(r => {
                 answer += "\n"+r.name+" : `"+r.id+"`";
             })
-            message.channel.send(anwser);
+            message.channel.send(answer);
         }
         else if(message.content.includes('emoji')){
             var answer = "Debug menu for emojis:";
