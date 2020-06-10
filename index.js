@@ -348,8 +348,8 @@ bot.on('message', function(message){
                 return;
             }
             for(var i =0; i<4; i++){
-                console.log(!args[i].match("/[A-Z]/[a-z]/[0-9]/g"));
-                if(!args[i].match("/[A-Z]/[a-z]/[0-9]/g")){
+                console.log(args[i].match("/[A-Z]/[a-z]/[0-9]/g"));
+                if(args[i] === "" || args[i]=== " "){
                     args[i] = "Rien";
                 } 
             }
