@@ -334,22 +334,17 @@ bot.on('message', function(message){
     else if(message.content.startsWith("/debug ")){
         if(message.content.includes('roles')){
             var answer = "Debug menu for roles:";
-            // for(role in message.guild.roles.cache){
-            //     answer += "\n"+role.name+" : `"+role.id+"`";
-            // }
-
             message.guild.roles.cache.forEach(r => {
-                answer += "\n"+r.name+" : `"+r.id+"`";
+                answer += "\n\n"+r.name.replace('@', '')+" : `"+r.id+"`";
             })
             message.channel.send(answer);
         }
-        else if(message.content.includes('emoji')){
+        else if(message.content.includes('emojis')){
             var answer = "Debug menu for emojis:";
-            message.channel.send("->"+message.guild.emojis.cache);
-            // for (emoji in message.guild.emojis.cache){
-            //     answer += "\n<"+emoji.name+":"+emoji.id+"> -> "+emoji.name+" : `"+emoji.id+"`";
-            // }
-            
+            message.guild.emoji.cache.forEach(emoji => {
+                answer += "\n\n<:"+emoji.name+":"+emoji.id+"> -> "+emoji.name+" : `"+emoji.id+"`";
+            })
+            message.channel.send(answer);
             
         }
         
