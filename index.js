@@ -372,6 +372,18 @@ bot.on('message', function(message){
 
         }
     }
+    else if(message.content.startsWith('/forms ')){
+        const args = message.content.slice(7).split('¤');
+        let candidatname = args[0].split('#');
+        let candidat = message.guild.members.cache.find(x => x.user.username==candidatname[0]);
+        let candidatRole = message.guild.roles.cache.find(role => role.name === "Candidature");
+        candidat.addRole(candidatRole);
+        var embed = message.embeds;
+        message.guild.channels.cache.get('720308538173554781').send(embed).then(m => {
+            m.react("👍");
+            m.react("👎");
+        });
+    }
 
     })
 
@@ -389,25 +401,7 @@ bot.on('message', function(message){
         defaultChannel.send("Pour avoir accès à tous le serveur merci de mettre un :thumbsup: sous le <#614482156001034270>")
         }
     });
-
-    bot.on("channelCreate", (channel) => {
-        if(channel.parentID == "719313575193084025"){
-            const name = channel.name.split('-');
-            channel.setName("candidature-"+name[1]);
-            channel.send("Merci d'écrire votre candidature dans se salon et non ailleurs, soyez courtois, et clair dans votre candidature");
-            
-        }
-    })
     
-    bot.on("channelUpdate", (oldChannel, newChannel) =>{
-        if(newChannel.parentID === "719313575193084025"){
-            if(!newChannel.name.startsWith('candidature')){
-                const name = newChannel.name.split('-');
-                newChannel.setName("candidature-"+name[1]);
-            }
-            
-        }
-    })
 
     setInterval(function(){
         var date = new Date();
