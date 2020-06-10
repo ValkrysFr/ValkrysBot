@@ -394,6 +394,7 @@ bot.on('message', function(message){
         if(channel.parentID == "719313575193084025"){
             const name = channel.name.split('-');
             channel.setName("candidature-"+name[1]);
+            channel.send("Merci d'écrire votre candidature dans se salon et non ailleurs, soyez courtois, et clair dans votre candidature");
             
         }
     })
