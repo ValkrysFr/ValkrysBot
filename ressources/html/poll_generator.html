@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poll Generator</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        button[id="generate"]{
+            border-radius: 10px;
+            padding: 15px;
+            transition: 0.5s;
+        }
+        button[id="generate"]:hover{
+            background-color: #42f55d;
+            
+        }
+        button[id="addField"]{
+            border-radius: 10px;
+            padding: 15px;
+            transition: 0.5s;
+            background-color: #42f55d;
+            padding: 10px;
+        }
+        button[id="addField"]:hover{
+            background-color: #38c84d;
+            
+        }
+        button[class="del"]{
+            border-radius: 10px;
+            transition: 0.5s;
+            background-color: #f54242;
+            padding: 8px;
+            margin-left: 15px;
+        }
+        button[class="del"]:hover{
+            background-color: #c03333;
+            
+        }
+        label {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .choice {
+            padding-right: 100px;
+        }
+        .field {
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Générateur de sondage</h1>
+    <p><label for="title">Titre du sondage</label></p>
+    <input type="text" id="title"/>
+    <div id="fields">
+        <div class="field" id="c1">
+            <p><label for="text1" id="lab1">Choix du Sondage:</label></p>
+            <input class="choice" type="text" id="text1" placeholder="Choix"/>
+            <input type="text" id="emote1" placeholder="Emote"/>
+        </div>
+        <div class="field" id="c2">
+        <input class="choice" type="text" id="text2" placeholder="Choix"/>
+        <input type="text" id="emote2" placeholder="Emote"/>
+        </div>
+    </div>
+    <p><button id="addField" onclick="newField()">Ajouter un choix</button></p>
+    <p><button id="generate" onclick="generate()">Générer la commande</button></p>
+    <label id="error" for="code"></label>
+    <p><input type="text" id="code" onclick="this.select()"></input></p>
+    <script>
+        var i = 3;
+        function newField(){
+            var text = "text"+i;
+            var emote = "emote"+i;
+            var deletei = "delete"+i;
+            $(fields).append(`
+                <div class="field" id="c${i}">
+                    <input class="choice"type="text" id="${text}" placeholder="Choix"/>
+                    <input type="text" id="${emote}" placeholder="Emote"/>
+                    <button class="del" id="${deletei}" onclick="delField(${i})">Supprimer</button>
+                </div>
+            `);
+            i++;
+        }
+        function delField(el){
+            document.getElementById("c"+el).remove();
+            i--;
+        }
+        function generate() {
+            var title = document.getElementById('title').value;
+            if(title == ""){
+                document.getElementById('error').innerText = "Veuillez remplir tous les champs"
+                document.getElementById('error').style.color = "red"
+                document.getElementById('code').value = ""
+                return;
+            }else{
+                var cmd = "/poll "+title;
+                var it = 1;
+                while(it < i){
+                    var choice = document.getElementById('text'+it).value;
+                    var emote = document.getElementById('emote'+it).value;
+                    if(choice == "" || emote== ""){
+                        document.getElementById('error').innerText = "Veuillez remplir tous les champs"
+                        document.getElementById('error').style.color = "red"
+                        document.getElementById('code').value = ""
+                        return;
+                    }else{
+                        cmd = cmd+";"+choice+"$"+emote;
+                        it++;
+                    }
+                    document.getElementById('error').innerText = "Copié/Collé ce message à l'intérieur du channel discord !"
+                    document.getElementById('error').style.color = "green"
+                    document.getElementById('code').value = cmd;
+                }
+            }
+            
+        }
+    </script>
+</body>
+</html>
