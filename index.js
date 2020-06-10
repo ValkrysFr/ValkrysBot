@@ -372,12 +372,12 @@ bot.on('message', function(message){
 
         }
     }
-    else if(message.content.startsWith('/forms ')){
+    else if(message.content.includes('/forms')){
         const args = message.content.slice(7).split('¤');
         let candidatname = args[0].split('#');
-        let candidat = message.guild.members.cache.find(x => x.user.username==candidatname[0]);
+        let candidat = message.guild.members.cache.find(x => x.user.username===candidatname[0]);
         let candidatRole = message.guild.roles.cache.find(role => role.name === "Candidature");
-        candidat.addRole(candidatRole);
+        candidat.roles.add(candidatRole);
         var embed = message.embeds;
         console.log(candidatname[0], embed, candidatRole);
         message.guild.channels.cache.get('720308538173554781').send(embed).then(m => {
