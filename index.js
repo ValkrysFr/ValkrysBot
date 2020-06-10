@@ -343,7 +343,10 @@ bot.on('message', function(message){
     else if(message.channel.parentID === '719313575193084025'){
         if(message.content.startsWith('/cv ')){
             const args = message.content.slice(4).split("¤");
-
+            if(length(args) != 4){
+                message.reply('vous avez du vous tromper quelque part !');
+                return;
+            }
             const embed = new Discord.MessageEmbed()
                 .setAuthor(message.author.username, message.author.avatarURL())
                 .setTitle("Candidature de: "+message.author.username)
