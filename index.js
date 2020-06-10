@@ -342,9 +342,13 @@ bot.on('message', function(message){
         else if(message.content.includes('emojis')){
             var answer = "Debug menu for emojis:";
             message.guild.emojis.cache.forEach(emoji => {
+                if(answer.length > 1000){
+                    message.channel.send(answer);
+                    answer = ""
+                }
                 answer += "\n\n<:"+emoji.name+":"+emoji.id+"> -> "+emoji.name+" : `"+emoji.id+"`";
             })
-            message.channel.send(answer);
+            
             
         }
         
