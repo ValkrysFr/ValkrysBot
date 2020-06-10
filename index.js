@@ -346,7 +346,7 @@ bot.on('message', function(message){
                     message.channel.send(answer);
                     answer = ""
                 }
-                answer += "\n\n<:"+emoji.name+":"+emoji.id+"> -> "+emoji.name+" : `"+emoji.id+"`";
+                answer += "\n\n<:"+emoji.name+":"+emoji.id+"> -> "+emoji.name.replace('_', '\_')+" : `"+emoji.id+"`";
             })
             
             
