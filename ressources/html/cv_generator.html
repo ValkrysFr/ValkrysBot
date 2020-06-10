@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur CV</title>
+    <style type="text/css">
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        button {
+            border-radius: 10px;
+            padding: 15px;
+            transition: 0.5s;
+        }
+        button:hover{
+            background-color: #42f55d;
+        }
+        select {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Générateur de candidature</h1>
+    <p><label>Présentation IRL:</label></p>
+    <textarea id="irl" rows="8" cols="50" required></textarea>
+    <p><label>Présentation in-game:</label></p>
+    <textarea id="ig" rows="8" cols="50" required></textarea>
+    <p><label>Grade demandé:</label></p>
+    <select id="grade" required>
+        <option value="Animateur">Animateur</option>
+        <option value="Guide">Guide</option>
+        <option value ="Modérateur">Modérateur</option>
+    </select>
+    <p><label>Motivation:</label></p>
+    <textarea id="motivation" rows="8" cols="50" required></textarea>
+    <p><button onclick="generate()">Générer la commande</button></p>
+    <label id="error" for="code"></label>
+    <p><input type="text" id="code" onclick="this.select()"></input></p>
+    <script>
+        function generate() {
+            var irl = document.getElementById('irl').value.replaceAll('\n', "$^$")
+            var ig = document.getElementById('ig').value.replaceAll('\n', "$^$")
+            var grade = document.getElementById('grade').value.replaceAll('\n', "$^$")
+            var motivation = document.getElementById('motivation').value.replaceAll('\n', "$^$")
+            if(irl == "" || ig == "" || grade=="" || motivation==""){
+                document.getElementById('error').innerText = "Veuillez remplir tous les champs"
+                document.getElementById('error').style.color = "red"
+                document.getElementById('code').value = ""
+            }else{
+                document.getElementById('error').innerText = "Copié/Collé ce message à l'intérieur du channel discord !"
+                document.getElementById('error').style.color = "green"
+                document.getElementById('code').value = "/cv "+irl+"¤"+ig+"¤"+grade+"¤"+motivation
+            }
+            
+        }
+    </script>
+</body>
+</html>
