@@ -53,15 +53,6 @@ bot.on('message', function(message){
     else if (message.content === "/github"){
         message.channel.send(":robot: Github du serveur: https://github.com/Breakerland")
     }
-    else if (message.content === "/debug"){
-        var date = new Date();
-        date.setHours(date.getHours()+2);
-         var actual = bot.msgs.actual;
-        message.reply("[Date: "+date.getHours()+"h"+date.getMinutes()+"m] \n[Actual: "+actual+"] \n[User: "+message.author.username+"]")
-        if(message.author.username.toLowerCase().includes('nitro')){
-            message.channel.send("includes nitro");
-        }else{ message.channel.send("not includes nitro"); }
-    }
     else if (message.channel.id === "710089322111565874"){
         if(message.content=== "/next"){
                 var actual = bot.msgs.actual
@@ -340,37 +331,22 @@ bot.on('message', function(message){
             stop_record(voiceChannel, message);
         }
     }
-    else if(message.channel.parentID === '719313575193084025'){
-        if(message.content.startsWith('/cv ')){
-            const args = message.content.slice(4).split("¤");
-            if(length(args) != 4){
-                message.reply('vous avez du vous tromper quelque part !');
-                return;
+    else if(message.content.startsWith("/debug ")){
+        if(message.content.includes('roles')){
+            var answer = "Debug menu for roles:";
+            for(role in message.guild.roles.cache){
+                answer += "\n"+role.name+" : `"+role.id+"`";
             }
-            for(var i =0; i<4; i++){
-                console.log(args[i].match("/[A-Z]/[a-z]/[0-9]/g"));
-                if(args[i] === "" || args[i]=== " "){
-                    args[i] = "Rien";
-                } 
-            }
-            const embed = new Discord.MessageEmbed()
-                .setAuthor(message.author.username, message.author.avatarURL())
-                .setTitle("Candidature de: "+message.author.username)
-                .addField("Présentation IRL:", args[0].replace('$^$', '\n'))
-                .addField("Présentation in-game:", args[1].replace('$^$', '\n'))
-                .addField("Poste demandé:", args[2].replace('$^$', '\n'))
-                .addField("Motivation:", args[3].replace('$^$', '\n'))
-                .setFooter("Candidature générer depuis breakerland.fr")
-                .setColor("RANDOM");
-            message.channel.send(embed).then(m => {
-                m.react("👍");
-                m.react("👎");
-            });
-            message.reply("refusé :x:");
-            console.log(args);
-            message.delete();
-
+            message.channel.send(anwser);
         }
+        else if(message.content.includes('emoji')){
+            var answer = "Debug menu for emojis:";
+            for (emoji in message.guild.emojis.cache){
+                answer += "\n<"+emoji.name+":"+emoji.id+"> -> "+emoji.name+" : `"+emoji.id+"`";
+            }
+            message.channel.send(anwser);
+        }
+        
     }
     else if(message.content.includes('/forms')){
         const cont = message.content.split("/forms ");
@@ -380,11 +356,12 @@ bot.on('message', function(message){
         let candidatRole = message.guild.roles.cache.find(role => role.name === "Candidature");
         candidat.roles.add(candidatRole);
         var embed = message.embeds;
+        message.guild.channels.cache.get('720308538173554781').send("Nouvelle candidature de <@"+candidat.user.id+"> !")
         message.guild.channels.cache.get('720308538173554781').send(embed).then(m => {
             m.react("👍");
             m.react("👎");
         });
-        message.guild.channels.cache.get('596756701982490635').send("Nouvelle candidature de <@"+candidat.user.id+"> ! <#720308538173554781> \@STAFF")
+        
     }
 
     })
