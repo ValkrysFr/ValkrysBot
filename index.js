@@ -379,10 +379,12 @@ bot.on('message', function(message){
         let candidatRole = message.guild.roles.cache.find(role => role.name === "Candidature");
         candidat.addRole(candidatRole);
         var embed = message.embeds;
+        console.log(candidatname[0], embed, candidatRole);
         message.guild.channels.cache.get('720308538173554781').send(embed).then(m => {
             m.react("👍");
             m.react("👎");
         });
+        message.reply('done');
     }
 
     })
