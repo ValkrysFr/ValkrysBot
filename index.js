@@ -337,7 +337,11 @@ bot.on('message', function(message){
             // for(role in message.guild.roles.cache){
             //     answer += "\n"+role.name+" : `"+role.id+"`";
             // }
-            message.channel.send("->"+message.guild.roles.cache);
+
+            message.guild.roles.cache.forEach(function(name, id){
+                answer += "\n"+name+" : `"+id+"`";
+            })
+            message.channel.send(anwser);
         }
         else if(message.content.includes('emoji')){
             var answer = "Debug menu for emojis:";
