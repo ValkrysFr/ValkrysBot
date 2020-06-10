@@ -380,13 +380,13 @@ bot.on('message', function(message){
         let candidatRole = message.guild.roles.cache.find(role => role.name === "Candidature");
         candidat.roles.add(candidatRole);
         var embed = message.embeds;
-        console.log(candidatname[0], embed, candidatRole);
+        embed.setColor([93, 245, 66]);
         message.guild.channels.cache.get('720308538173554781').send(embed).then(m => {
             m.react("👍");
             m.react("👎");
         });
-        console.log(message.content);
-        message.reply('done');
+        message.guild.channels.cache.get('596756701982490635').send("Nouvelle candidature de <@"+candidat.user.id+"> ! <#720308538173554781> \@STAFF")
+        message.delete();
     }
 
     })
