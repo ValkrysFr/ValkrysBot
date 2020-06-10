@@ -347,6 +347,9 @@ bot.on('message', function(message){
                 message.reply('vous avez du vous tromper quelque part !');
                 return;
             }
+            for(var i =0; i<4; i++){
+                if(!args[i].match("/[A-Z]/[a-z]/[0-9]/g") args[i] = "Rien"
+            }
             const embed = new Discord.MessageEmbed()
                 .setAuthor(message.author.username, message.author.avatarURL())
                 .setTitle("Candidature de: "+message.author.username)
