@@ -338,8 +338,8 @@ bot.on('message', function(message){
             //     answer += "\n"+role.name+" : `"+role.id+"`";
             // }
 
-            message.guild.roles.cache.forEach(function(name, id){
-                answer += "\n"+name+" : `"+id+"`";
+            message.guild.roles.cache.forEach(r => {
+                answer += "\n"+r.name+" : `"+r.id+"`";
             })
             message.channel.send(anwser);
         }
