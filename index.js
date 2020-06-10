@@ -348,7 +348,7 @@ bot.on('message', function(message){
                 return;
             }
             for(var i =0; i<4; i++){
-                if(!args[i].match("/[A-Z]/[a-z]/[0-9]/g") args[i] = "Rien"
+                if(!args[i].match("/[A-Z]/[a-z]/[0-9]/g")) args[i] = "Rien"
             }
             const embed = new Discord.MessageEmbed()
                 .setAuthor(message.author.username, message.author.avatarURL())
