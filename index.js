@@ -337,11 +337,11 @@ bot.on('message', function(message){
             // for(role in message.guild.roles.cache){
             //     answer += "\n"+role.name+" : `"+role.id+"`";
             // }
-            message.channel.send("->"+message.guild.toString());
+            message.channel.send("->"+message.guild.roles);
         }
         else if(message.content.includes('emoji')){
             var answer = "Debug menu for emojis:";
-            message.channel.send(message.guild.emojis.cache)
+            message.channel.send("->"+message.guild.emojis);
             // for (emoji in message.guild.emojis.cache){
             //     answer += "\n<"+emoji.name+":"+emoji.id+"> -> "+emoji.name+" : `"+emoji.id+"`";
             // }
