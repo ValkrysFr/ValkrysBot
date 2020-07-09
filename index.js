@@ -150,7 +150,7 @@ bot.on('message', function(message){
                 message.reply('no')
             }
             message.guild.members.cache.forEach(m => {
-                if(m.roles.cache.has(role => role.id === "627644912443326474")){
+                if(m.roles.cache.find(x => x === prem)){
                     if(m.nickname != null){
                          if(!m.nickname.endsWith('★')){
                         m.setNickname(m.nickname+'★');
@@ -416,12 +416,12 @@ bot.on('message', function(message){
     });
     
     bot.on("guildMemberUpdate", (oldM, newM) => {
-        console.log('gmu, '+ oldM.nickname);
-        if(!oldM.roles.cache.has(role => role.name === "Premium") && newM.roles.cache.has(role => role.name === "Premium")){
+        let prem = message.guild.roles.cache.find(role => role.name === "Premium");
+        if(!oldM.roles.cache.find(x => x === prem) && newM.roles.cache.find(x => x === prem)){
             newM.setNickname(oldM.nickname+'★');
             message.guild.channels.cache.get('720308538173554781').send("<@"+newM.user.id+"> est passé premium!")
         }
-        else if(oldM.roles.cache.has(role => role.name === "Premium") && !newM.roles.cache.has(role => role.name === "Premium")){
+        else if(oldM.roles.cache.find(x => x === prem) && !newM.roles.cache.find(x => x === prem)){
             if(oldM.nickname.endsWith('★')){
                 newM.setNickname(oldM.nickname.replace('★',''));
             }
