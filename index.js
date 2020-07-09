@@ -144,7 +144,7 @@ bot.on('message', function(message){
         if(message.content.slice(8) === "premium"){
             let author = message.guild.members.cache.find(x => x.user.username===message.author.username);
             let prem = message.guild.roles.cache.find(role => role.name === "Premium");
-            if(author.roles.cache.has(prem)){
+            if(author.roles.cache.find(prem)){
                 message.reply('yes')
             }else{
                 message.reply('no')
