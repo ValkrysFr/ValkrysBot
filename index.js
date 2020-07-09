@@ -140,6 +140,22 @@ bot.on('message', function(message){
                          });
         }
     }
+    else if(message.content.startsWith("/reload")){
+        if(message.content.slice(8) === "premium"){
+            message.guild.members.cache.forEach(m => {
+                if(m.roles.cache.has(role => role.id === "627644912443326474")){
+                    if(!m.nickname.endsWith('★')){
+                        m.setNickname(m.nickname+'★');
+                        message.guild.channels.cache.get('720308538173554781').send("<@"+m.user.id+"> est passé premium!")
+                    }
+                }else{
+                    if(m.nickname.endsWith('★')){
+                        m.setNickname(m.nickname.replace('★', ''));
+                    }
+                }
+            })
+        }
+    }
     else if(message.content.startsWith("/clear")){
       const args = message.content.split(' ').slice(1);
       const amount = args.join(' ');
@@ -386,6 +402,18 @@ bot.on('message', function(message){
         }
     });
     
+    bot.on("guildMemberUpdate", (oldM, newM) => {
+        if( !oldM.roles.cache.has(role => role.id === "627644912443326474") && newM.roles.cache.has(role => role.id === "627644912443326474")){
+            newM.setNickname(oldM.nickname+'★');
+            message.guild.channels.cache.get('720308538173554781').send("<@"+newM.user.id+"> est passé premium!")
+        }
+        else if( oldM.roles.cache.has(role => role.id === "627644912443326474") && !newM.roles.cache.has(role => role.id === "627644912443326474")){
+            if(oldM.nickname.endsWith('★')){
+                newM.setNickname(oldM.nickname.replace('★',''));
+            }
+            message.guild.channels.cache.get('720308538173554781').send("<@"+newM.user.id+"> n'est plus premium!")
+        }
+    });
 
     setInterval(function(){
         var date = new Date();

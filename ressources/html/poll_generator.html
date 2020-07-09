@@ -6,12 +6,26 @@
     <title>Poll Generator</title>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <style>
-        body {
+        body  {
+            background-color: rgb(19, 68, 85);
+        }
+        h1 {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            margin-top: 100px;
+            color: white;
             font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        #nav img {
+            max-width: 100%;
+            max-height: 50px;
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+        button {
+            cursor:pointer;
         }
         button[id="generate"]{
             border-radius: 10px;
@@ -50,33 +64,66 @@
             justify-content: center;
             align-items: center;
         }
-        .choice {
-            padding-right: 100px;
-        }
         .field {
             padding-bottom: 20px;
         }
+        #sondage {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            background-color: lightgrey;
+            border-radius: 10px;
+            margin-left: 30%;
+            margin-right: 30%;
+            padding-bottom: 20px;
+        }
+        #title, #fields input{
+            border-radius: 10px;
+            height: 25px;
+            margin-right: 25px;
+            text-align: center;
+            transition: 0.25s;
+            border-color: black;
+            border-style:groove;
+        }
+        #title:hover, #fields input:hover{
+            background-color: rgb(223, 221, 221);
+        }
+        .choice {
+            width: 320px;
+        }
+        #lab1 {
+            align-items: flex-start;
+        }
+        #code {
+            cursor:pointer;
+        }
     </style>
+    
 </head>
 <body>
     <h1>Générateur de sondage</h1>
-    <p><label for="title">Titre du sondage</label></p>
-    <input type="text" id="title"/>
-    <div id="fields">
-        <div class="field" id="c1">
-            <p><label for="text1" id="lab1">Choix du Sondage:</label></p>
-            <input class="choice" type="text" id="text1" placeholder="Choix"/>
-            <input type="text" id="emote1" placeholder="Emote"/>
+    <div id="sondage">
+        <p><label for="title">Titre du sondage</label></p>
+        <input type="text" id="title" placeholder="Titre"/>
+        <div id="fields">
+            <div class="field" id="c1">
+                <p><label for="text1" id="lab1">Choix du sondage:</label></p>
+                <input class="choice" type="text" id="text1" placeholder="Choix"/>
+                <input type="text" id="emote1" placeholder="Emote"/>
+            </div>
+            <div class="field" id="c2">
+            <input class="choice" type="text" id="text2" placeholder="Choix"/>
+            <input type="text" id="emote2" placeholder="Emote"/>
+            </div>
         </div>
-        <div class="field" id="c2">
-        <input class="choice" type="text" id="text2" placeholder="Choix"/>
-        <input type="text" id="emote2" placeholder="Emote"/>
-        </div>
+        <p><button id="addField" onclick="newField()">Ajouter un choix</button></p>
+        <p><button id="generate" onclick="generate()">Générer la commande</button></p>
+        <label id="error" for="code"></label>
+        <p><input type="text" id="code" onclick="this.select()" disabled></input></p>
     </div>
-    <p><button id="addField" onclick="newField()">Ajouter un choix</button></p>
-    <p><button id="generate" onclick="generate()">Générer la commande</button></p>
-    <label id="error" for="code"></label>
-    <p><input type="text" id="code" onclick="this.select()"></input></p>
     <script>
         var i = 3;
         function newField(){
@@ -112,6 +159,7 @@
                     if(choice == "" || emote== ""){
                         document.getElementById('error').innerText = "Veuillez remplir tous les champs"
                         document.getElementById('error').style.color = "red"
+                        document.getElementById('code').disabled = true;
                         document.getElementById('code').value = ""
                         return;
                     }else{
@@ -120,6 +168,7 @@
                     }
                     document.getElementById('error').innerText = "Copié/Collé ce message à l'intérieur du channel discord !"
                     document.getElementById('error').style.color = "green"
+                    document.getElementById('code').disabled = false;
                     document.getElementById('code').value = cmd;
                 }
             }
