@@ -437,7 +437,10 @@ bot.on('message', function(message){
             if(oldM.nickname === null){
                 oldM.setNickname(oldM.user.username)
             }
-            if(oldM.nickname.endsWith('★') && !newM.nickname.endsWith('★')){
+            if(newM.nickname === null){
+                newM.setNickname(oldM.user.username)
+            }
+            else if(oldM.nickname.endsWith('★') && !newM.nickname.endsWith('★')){
                 newM.setNickname(oldM.nickname);
             }
         }
