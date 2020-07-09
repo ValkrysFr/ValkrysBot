@@ -82,7 +82,7 @@ bot.on('message', function(message){
                 }
                 var _message = bot.msgs[actual.toString()].text;
                 var _author = bot.msgs[actual.toString()].author;
-                bot.channels.get("710089322111565874").send("Idée du Jour n°"+actual+" proposé par <@"+_author+">\n\n**"+_message+"**");
+                bot.channels.cache.get("710089322111565874").send("Idée du Jour n°"+actual+" proposé par <@"+_author+">\n\n**"+_message+"**");
                 bot.msgs ["actual"]= actual+1;
                 fs.writeFile("./ressources/json/ideas.json", JSON.stringify(bot.msgs, null, 4), err =>{
                             if(err) throw err;
