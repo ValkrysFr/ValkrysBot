@@ -144,14 +144,20 @@ bot.on('message', function(message){
         if(message.content.slice(8) === "premium"){
             message.guild.members.cache.forEach(m => {
                 if(m.roles.cache.has(role => role.id === "627644912443326474")){
-                    if(!m.nickname.endsWith('★')){
+                    if(m.nickname != null){
+                         if(!m.nickname.endsWith('★')){
                         m.setNickname(m.nickname+'★');
                         message.guild.channels.cache.get('720308538173554781').send("<@"+m.user.id+"> est passé premium!")
+                         }
                     }
+                   
                 }else{
-                    if(m.nickname.endsWith('★')){
+                    if(m.nickname != null){
+                      if(m.nickname.endsWith('★')){
                         m.setNickname(m.nickname.replace('★', ''));
+                        }  
                     }
+                    
                 }
             })
         }
@@ -404,11 +410,11 @@ bot.on('message', function(message){
     
     bot.on("guildMemberUpdate", (oldM, newM) => {
         console.log('gmu, '+ oldM.nickname);
-        if(!oldM.roles.cache.has(role => role.id === "627644912443326474") && newM.roles.cache.has(role => role.id === "627644912443326474")){
+        if(!oldM.roles.cache.has(role => role.name === "Premium") && newM.roles.cache.has(role => role.name === "Premium")){
             newM.setNickname(oldM.nickname+'★');
             message.guild.channels.cache.get('720308538173554781').send("<@"+newM.user.id+"> est passé premium!")
         }
-        else if(oldM.roles.cache.has(role => role.id === "627644912443326474") && !newM.roles.cache.has(role => role.id === "627644912443326474")){
+        else if(oldM.roles.cache.has(role => role.name === "Premium") && !newM.roles.cache.has(role => role.name === "Premium")){
             if(oldM.nickname.endsWith('★')){
                 newM.setNickname(oldM.nickname.replace('★',''));
             }
