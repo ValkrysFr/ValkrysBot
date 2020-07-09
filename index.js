@@ -154,7 +154,7 @@ bot.on('message', function(message){
                     if(m.nickname != null){
                          if(!m.nickname.endsWith('★')){
                         m.setNickname(m.nickname+'★');
-                        message.guild.channels.cache.get('710107114810376212').send("<@"+m.user.id+"> est passé premium!")
+                        message.guild.channels.cache.get('710107114810376212').send(m.nickname+" est passé premium!")
                          }
                     }
                    
@@ -162,6 +162,7 @@ bot.on('message', function(message){
                     if(m.nickname != null){
                       if(m.nickname.endsWith('★')){
                         m.setNickname(m.nickname.replace('★', ''));
+                        message.guild.channels.cache.get('710107114810376212').send(m.nickname+" n'est plus premium!")
                         }  
                     }
                     
