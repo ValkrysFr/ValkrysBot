@@ -142,6 +142,13 @@ bot.on('message', function(message){
     }
     else if(message.content.startsWith("/reload")){
         if(message.content.slice(8) === "premium"){
+            let author = message.guild.members.cache.find(x => x.user.username===message.author.username);
+            let prem = message.guild.roles.cache.find(role => role.name === "Premium");
+            if(author.roles.cache.has(prem)){
+                message.reply('yes')
+            }else{
+                message.reply('no')
+            }
             message.guild.members.cache.forEach(m => {
                 if(m.roles.cache.has(role => role.id === "627644912443326474")){
                     if(m.nickname != null){
