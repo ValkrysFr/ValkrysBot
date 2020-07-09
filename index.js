@@ -418,16 +418,25 @@ bot.on('message', function(message){
     bot.on("guildMemberUpdate", (oldM, newM) => {
         let prem = bot.guilds.cache.find(guild => guild.id ==="596754524392259584").roles.cache.find(role => role.name === "Premium");
         if(!oldM.roles.cache.find(x => x === prem) && newM.roles.cache.find(x => x === prem)){
+            if(oldM.nickname === null){
+                oldM.setNickname(oldM.user.username)
+            }
             newM.setNickname(oldM.nickname+'★');
             bot.channels.cache.get('710107114810376212').send("<@"+newM.user.id+"> est passé premium!")
         }
         else if(oldM.roles.cache.find(x => x === prem) && !newM.roles.cache.find(x => x === prem)){
+            if(oldM.nickname === null){
+                oldM.setNickname(oldM.user.username)
+            }
             if(oldM.nickname.endsWith('★')){
                 newM.setNickname(oldM.nickname.replace('★',''));
             }
             bot.channels.cache.get('710107114810376212').send("<@"+newM.user.id+"> n'est plus premium!")
         }
         else if(oldM.roles.cache.find(x => x === prem) && newM.roles.cache.find(x => x === prem)){
+            if(oldM.nickname === null){
+                oldM.setNickname(oldM.user.username)
+            }
             if(oldM.nickname.endsWith('★') && !newM.nickname.endsWith('★')){
                 newM.setNickname(oldM.nickname);
             }
