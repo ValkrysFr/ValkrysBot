@@ -154,7 +154,7 @@ bot.on('message', function(message){
                     if(m.nickname != null){
                          if(!m.nickname.endsWith('★')){
                         m.setNickname(m.nickname+'★');
-                        message.guild.channels.cache.get('720308538173554781').send("<@"+m.user.id+"> est passé premium!")
+                        message.guild.channels.cache.get('710107114810376212').send("<@"+m.user.id+"> est passé premium!")
                          }
                     }
                    
@@ -416,16 +416,16 @@ bot.on('message', function(message){
     });
     
     bot.on("guildMemberUpdate", (oldM, newM) => {
-        let prem = message.guild.roles.cache.find(role => role.name === "Premium");
+        let prem = bot.guilds.cache.find(guild => guild.id ==="596754524392259584").roles.cache.find(role => role.name === "Premium");
         if(!oldM.roles.cache.find(x => x === prem) && newM.roles.cache.find(x => x === prem)){
             newM.setNickname(oldM.nickname+'★');
-            message.guild.channels.cache.get('720308538173554781').send("<@"+newM.user.id+"> est passé premium!")
+            message.guild.channels.cache.get('710107114810376212').send("<@"+newM.user.id+"> est passé premium!")
         }
         else if(oldM.roles.cache.find(x => x === prem) && !newM.roles.cache.find(x => x === prem)){
             if(oldM.nickname.endsWith('★')){
                 newM.setNickname(oldM.nickname.replace('★',''));
             }
-            message.guild.channels.cache.get('720308538173554781').send("<@"+newM.user.id+"> n'est plus premium!")
+            message.guild.channels.cache.get('710107114810376212').send("<@"+newM.user.id+"> n'est plus premium!")
         }
     });
 
