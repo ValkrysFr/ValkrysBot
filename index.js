@@ -444,7 +444,7 @@ bot.on('message', function(message){
         }
     });
 
-    setInterval(function(){
+   /* setInterval(function(){
         var date = new Date();
         date.setHours(date.getHours()+2);
         var heure = date.getHours();
@@ -464,7 +464,7 @@ bot.on('message', function(message){
                          });
             }
         }
-    }, 60000);
+    }, 60000);*/
 
     async function execute(message, serverQueue) {
         if(message.content.startsWith('/p')){
