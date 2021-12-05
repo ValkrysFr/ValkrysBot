@@ -18,8 +18,6 @@ bot.on('ready', function(){
 const fs = require("fs");
 const ffmpeg = require("ffmpeg");
 const opus = require("opusscript");
-const ytdl = require("ytdl-core-discord");
-const yts = require("yt-search");
 const config = require("./config.json")
 const queue = new Map();
 
