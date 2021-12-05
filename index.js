@@ -16,9 +16,6 @@ bot.on('ready', function(){
 })
 
 const fs = require("fs");
-bot.msgs = require("./ressources/json/ideas.json");
-bot.polls =require("./ressources/json/polls.json");
-
 const ffmpeg = require("ffmpeg");
 const opus = require("opusscript");
 const ytdl = require("ytdl-core-discord");
