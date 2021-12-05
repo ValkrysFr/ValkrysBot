@@ -27,8 +27,8 @@ bot.on('message', function(message) {
     const serverQueue = queue.get(message.guild.id);
     
     if (message.channel.id === config.suggestion_channel_id) {
-        message.react("👎");
         message.react("👍");
+        message.react("👎");
     } else if (message.content === "/vote") {
         message.channel.send(":mouse_three_button: Lien pour voter : " + config.vote_link)
     } else if (message.content === "/site") {
