@@ -22,6 +22,10 @@ const config = require("./config.json")
 const queue = new Map();
 
 bot.on('message', function(message) {
+    if (message.system) {
+        return;
+    }
+
     const serverQueue = queue.get(message.guild.id);
     
     if (message.channel.id === config.suggestion_channel_id) {
