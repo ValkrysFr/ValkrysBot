@@ -1,3 +1,10 @@
 {
-	"token": "your-token"
+	"token": "your-token",
+	"suggestion_channel_id": "",
+	"vote_link": "https://valkrys.fr/vote",
+	"site_link": "https://valkrys.fr",
+	"dynmap_link": "https://map.valkrys.fr",
+	"minecraft_link": "play.valkrys.fr",
+	"message_rules_react": "",
+	"message_rules_id": ""
 }
